@@ -12,7 +12,6 @@ const Home = () => {
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [gender, setGender] = useState("male");
-  const [relationship, setRelationship] = useState("single");
   const [transactionId, setTransactionId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -48,14 +47,13 @@ const Home = () => {
         return;
       }
 
-      if (gender === "female" && relationship === "single") {
+      if (gender === "female") {
         const { error } = await supabase.from("registrations").insert([
           {
             name,
             email,
             phone_number: phoneNumber,
             gender,
-            relationship,
           },
         ]);
 
@@ -76,7 +74,6 @@ const Home = () => {
             email,
             phone_number: phoneNumber,
             gender,
-            relationship,
             transaction_id: transactionId,
           },
         ]);
@@ -176,15 +173,6 @@ const Home = () => {
                 >
                   Relationship
                 </label>
-                <select
-                  id="relationship"
-                  value={relationship}
-                  onChange={(e) => setRelationship(e.target.value)}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                >
-                  <option value="single">Single</option>
-                  <option value="couple">Couple</option>
-                </select>
               </div>
               {showQRCode && (
                 <div>
