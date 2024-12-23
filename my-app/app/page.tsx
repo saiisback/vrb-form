@@ -166,14 +166,6 @@ const Home = () => {
                   <option value="female">Female</option>
                 </select>
               </div>
-              <div>
-                <label
-                  htmlFor="relationship"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Relationship
-                </label>
-              </div>
               {showQRCode && (
                 <div>
                   <p className="text-center text-sm text-gray-700 mb-2">
