@@ -13,6 +13,8 @@ const Home = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [gender, setGender] = useState("male");
   const [transactionId, setTransactionId] = useState("");
+  const [members, setMembers] = useState("");
+  const [promotions, setPromotions] = useState(true); // Opt-in state
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [showQRCode, setShowQRCode] = useState(false);
@@ -24,7 +26,6 @@ const Home = () => {
     setMessage("");
 
     try {
-      // Check for unique constraints for email and phone number
       const { data: emailCheck } = await supabase
         .from("registrations")
         .select("email")
@@ -32,6 +33,7 @@ const Home = () => {
 
       if (emailCheck && emailCheck.length > 0) {
         setMessage("Error: Email already exists. Please use a different email.");
+        setIsLoading(false);
         return;
       }
 
@@ -44,6 +46,13 @@ const Home = () => {
         setMessage(
           "Error: Phone number already exists. Please use a different phone number."
         );
+        setIsLoading(false);
+        return;
+      }
+
+      if (!members.trim()) {
+        setMessage("Please enter the number of members.");
+        setIsLoading(false);
         return;
       }
 
@@ -54,6 +63,8 @@ const Home = () => {
             email,
             phone_number: phoneNumber,
             gender,
+            members,
+            promotions,
           },
         ]);
 
@@ -65,6 +76,7 @@ const Home = () => {
         setShowQRCode(true);
         if (transactionId.trim() === "") {
           setMessage("Please enter a transaction ID.");
+          setIsLoading(false);
           return;
         }
 
@@ -75,6 +87,8 @@ const Home = () => {
             phone_number: phoneNumber,
             gender,
             transaction_id: transactionId,
+            members,
+            promotions,
           },
         ]);
 
@@ -112,7 +126,7 @@ const Home = () => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   required
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="mt-1 block w-full rounded-md border border-black shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
               </div>
               <div>
@@ -128,7 +142,7 @@ const Home = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="mt-1 block w-full rounded-md border border-black shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
               </div>
               <div>
@@ -146,7 +160,7 @@ const Home = () => {
                   required
                   pattern="\d{10}"
                   title="Phone number must be 10 digits."
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="mt-1 block w-full rounded-md border border-black shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 />
               </div>
               <div>
@@ -160,11 +174,44 @@ const Home = () => {
                   id="gender"
                   value={gender}
                   onChange={(e) => setGender(e.target.value)}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                  className="mt-1 block w-full rounded-md border border-black shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                 >
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                 </select>
+              </div>
+              <div>
+                <label
+                  htmlFor="members"
+                  className="block text-sm font-medium text-gray-700"
+                >
+                  Number of Members
+                </label>
+                <input
+                  id="members"
+                  type="text"
+                  value={members}
+                  onChange={(e) => setMembers(e.target.value)}
+                  required
+                  pattern="\d+"
+                  title="Please enter a valid number."
+                  className="mt-1 block w-full rounded-md border border-black shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="promotions"
+                  className="flex items-center space-x-2 text-sm font-medium text-gray-700"
+                >
+                  <input
+                    id="promotions"
+                    type="checkbox"
+                    checked={promotions}
+                    onChange={(e) => setPromotions(e.target.checked)}
+                    className="h-4 w-4 rounded border-black focus:ring-blue-500"
+                  />
+                  <span>Opt-in for future promotions</span>
+                </label>
               </div>
               {showQRCode && (
                 <div>
@@ -188,7 +235,7 @@ const Home = () => {
                     value={transactionId}
                     onChange={(e) => setTransactionId(e.target.value)}
                     required
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                    className="mt-1 block w-full rounded-md border border-black shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                   />
                 </div>
               )}
