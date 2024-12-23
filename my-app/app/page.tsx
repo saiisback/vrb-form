@@ -97,7 +97,7 @@ const Home = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-blue-900 to-blue-600 p-6">
+    <div className="flex items-center justify-center min-h-screen bg-[#78B3CE] p-6">
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
         {!isRegistrationComplete ? (
           <>
