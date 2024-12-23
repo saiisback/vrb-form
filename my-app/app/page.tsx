@@ -13,7 +13,6 @@ const Home = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [gender, setGender] = useState("male");
   const [transactionId, setTransactionId] = useState("");
-  const [members, setMembers] = useState("");
   const [promotions, setPromotions] = useState(true); // Opt-in state
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -50,12 +49,7 @@ const Home = () => {
         return;
       }
 
-      if (!members.trim()) {
-        setMessage("Please enter the number of members.");
-        setIsLoading(false);
-        return;
-      }
-
+     
       if (gender === "female") {
         const { error } = await supabase.from("registrations").insert([
           {
@@ -63,7 +57,6 @@ const Home = () => {
             email,
             phone_number: phoneNumber,
             gender,
-            members,
             promotions,
           },
         ]);
@@ -87,7 +80,6 @@ const Home = () => {
             phone_number: phoneNumber,
             gender,
             transaction_id: transactionId,
-            members,
             promotions,
           },
         ]);
@@ -182,24 +174,6 @@ const Home = () => {
               </div>
               <div>
                 <label
-                  htmlFor="members"
-                  className="block text-sm font-medium text-gray-700"
-                >
-                  Number of Members
-                </label>
-                <input
-                  id="members"
-                  type="text"
-                  value={members}
-                  onChange={(e) => setMembers(e.target.value)}
-                  required
-                  pattern="\d+"
-                  title="Please enter a valid number."
-                  className="mt-1 block w-full rounded-md border border-black shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                />
-              </div>
-              <div>
-                <label
                   htmlFor="promotions"
                   className="flex items-center space-x-2 text-sm font-medium text-gray-700"
                 >
@@ -212,6 +186,11 @@ const Home = () => {
                   />
                   <span>Opt-in for future promotions</span>
                 </label>
+                <p className="text-left text-sm pt-4 text-gray-700 mb-2">
+                  *Entry is free for women.
+                  <br/> *For men, the entry fee is ₹500 with prior registration.<br/>*On-spot offline registration is ₹700.
+                  
+                </p>
               </div>
               {showQRCode && (
                 <div>
@@ -219,10 +198,18 @@ const Home = () => {
                     Here is the QR Code:
                   </p>
                   <img
-                    src="/qrcode.png"
+                    src="/qrcode.jpeg"
                     alt="QR Code"
                     className="w-40 h-40 mx-auto mb-4"
                   />
+                  <p className="text-center text-lg text-gray-700 mb-2">
+                   UPI-ID : 7483988687@ybl
+                  </p>
+                  <p className="text-center text-sm text-gray-700 mb-2">
+                  *The amount is redeemable against various items available on the menu at VRB Restaurant, up to a value of ₹500.
+                  <br/>
+                  *Kindly enter the transaction ID below upon completing the transaction.
+                  </p>
                   <label
                     htmlFor="transactionId"
                     className="block text-sm font-medium text-gray-700"
