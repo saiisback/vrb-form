@@ -198,13 +198,10 @@ const Home = () => {
                     Here is the QR Code:
                   </p>
                   <img
-                    src="/qrcode.jpeg"
+                    src="/qrcode.png"
                     alt="QR Code"
                     className="w-40 h-40 mx-auto mb-4"
                   />
-                  <p className="text-center text-lg text-gray-700 mb-2">
-                   UPI-ID : 7483988687@ybl
-                  </p>
                   <p className="text-center text-sm text-gray-700 mb-2">
                   *The amount is redeemable against various items available on the menu at VRB Restaurant, up to a value of ₹500.
                   <br/>
@@ -248,7 +245,7 @@ const Home = () => {
           </>
         ) : (
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-blue-800 mb-4">
+            <h1 clasrtsName="text-2xl font-bold text-blue-800 mb-4">
               Registration Successful!
             </h1>
             <p className="text-gray-700">
