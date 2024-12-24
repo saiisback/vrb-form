@@ -245,7 +245,7 @@ const Home = () => {
           </>
         ) : (
           <div className="text-center">
-            <h1 clasrtsName="text-2xl font-bold text-blue-800 mb-4">
+            <h1 className="text-2xl font-bold text-blue-800 mb-4">
               Registration Successful!
             </h1>
             <p className="text-gray-700">
